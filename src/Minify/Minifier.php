@@ -77,7 +77,7 @@ class Minifier
 	 */
 	public function addFile($file)
 	{
-		if(!in_array($file, $this->files))
+		if($file && !in_array($file, $this->files))
 		{
 			$this->files[] = $file;
 		}
@@ -116,7 +116,7 @@ class Minifier
 	 */
 	public function addGroup($group)
 	{
-		if(!in_array($group, $this->groups))
+		if($group && !in_array($group, $this->groups))
 		{
 			$this->groups[] = $group;
 		}
