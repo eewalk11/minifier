@@ -28,7 +28,7 @@ class MinifyException extends Exception
 		{
 			$fullMessage .= ": $message";
 		}
-		parent::__construct($message);
+		parent::__construct($fullMessage);
 	}
 
 

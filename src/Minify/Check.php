@@ -60,7 +60,7 @@ final class Check
 
 		if(!file_exists($fullpath))
 		{
-			throw new MinifyException("File not exist: $fullpath");
+			throw new MinifyException("File does not exist: $fullpath");
 		}
 		if(!is_readable($fullpath))
 		{
@@ -91,7 +91,7 @@ final class Check
 
 		if(!array_key_exists($group, $groups))
 		{
-			throw new MinifyException("Cannot add group: does not exist: $group");
+			throw new MinifyException("Group does not exist: $group");
 		}
 	}
 
