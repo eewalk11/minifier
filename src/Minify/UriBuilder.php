@@ -116,6 +116,11 @@ class UriBuilder
 	protected function addBase(&$uri)
 	{
 		$base = $this->min->getBase();
+		if(substr($base, -1) == "/")
+		{
+			//Remove trailing slash
+			$base = substr($base, 0, -1);
+		}
 
 		if($this->debug)
 		{

@@ -319,15 +319,7 @@ class Minifier implements JsonSerializable
 	 */
 	public function setBase($dir)
 	{
-		if(!$dir || !is_string($dir))
-		{
-			$this->base = false;
-		}
-		else
-		{
-			//Remove a trailing slash
-			$this->base = substr($dir, -1) == "/" ? substr($dir, 0, -1) : $dir;
-		}
+		$this->base = $dir || is_string($dir) ? $dir : false;
 	}
 
 
