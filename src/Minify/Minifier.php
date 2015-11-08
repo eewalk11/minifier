@@ -4,12 +4,14 @@
 
 namespace Minify;
 
+use JsonSerializable;
+
 
 
 /**
  * This class builds a URI to pass JavaScript and CSS files to Minify.
  */
-class Minifier
+class Minifier implements JsonSerializable
 {
 
 
@@ -59,6 +61,32 @@ class Minifier
 	public function __destruct()
 	{
 		//Empty destructor
+	}
+
+
+
+	/*
+	 * PUBLIC IMPLEMENTED METHODS
+	 */
+
+
+
+	/**
+	 * Get a JSON encodable array.
+	 * @return array An array in the following format:
+	 * <ul>
+	 *   <li>"base" => The base directory, false if unset.</li>
+	 *   <li>"groups" => An array of Minify group names.</li>
+	 *   <li>"files" => An array of relative file paths.</li>
+	 * <ul>
+	 */
+	public function jsonSerialize()
+	{
+		return [
+			"base" => $this->base,
+			"groups" => $this->groups,
+			"files" => $this->files
+		];
 	}
 
 
