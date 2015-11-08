@@ -203,9 +203,9 @@ class Minifier
 	public function removeFile($file)
 	{
 		$rem = false;
-		if(in_array($file, $this->files))
+		if(($index = array_search($file, $this->files)) !== false)
 		{
-			unset($this->files[$file]);
+			unset($this->files[$index]);
 			$rem = true;
 		}
 		return $rem;
@@ -221,9 +221,9 @@ class Minifier
 	public function removeGroup($group)
 	{
 		$rem = false;
-		if(in_array($group, $this->groups))
+		if(($index = array_search($group, $this->groups)) !== false)
 		{
-			unset($this->groups[$group]);
+			unset($this->groups[$index]);
 			$rem = true;
 		}
 		return $rem;
