@@ -21,9 +21,9 @@ class UriBuilder
 
 
 	/**
-	 * @var Minifier The minifer to use to construct the URI.
+	 * @var array An array of data used to construct the URI.
 	 */
-	protected $min = null;
+	protected $data = [];
 
 
 
@@ -48,11 +48,26 @@ class UriBuilder
 
 	/**
 	 * Construct a new Minify URI builder.
-	 * @param Minifier $min The minifier to use to construct the URI.
+	 * @param Minifier|array $data Data from which to construct the URI. This may be:
+	 * <ul>
+	 *   <li>An instance of Minify/Minifier</li>
+	 *   <li>An array matching the format of the output from Minify/Minifier::jsonSerialize()</li>
+	 * </ul>
+	 * The URI will fail to generate if this is not an expected type.
 	 */
-	public function __construct(Minifier $min)
+	public function __construct($data)
 	{
-		$this->min = $min;
+		if($data instanceof Minifier)
+		{
+			$this->data = json_encode($data);
+		}
+		elseif(is_array($data))
+		{
+			$this->data = $data;
+		}
+
+		//$this->data will be empty if data type is invalid
+
 		$this->debug = Config::getOption("debug");
 	}
 
@@ -115,19 +130,15 @@ class UriBuilder
 	 */
 	protected function addBase(&$uri)
 	{
-		$base = $this->min->getBase();
-		if(substr($base, -1) == "/")
+		if(($base = $this->getBase()))
 		{
-			//Remove trailing slash
-			$base = substr($base, 0, -1);
-		}
+			if($this->debug)
+			{
+				Check::base($base);
+			}
 
-		if($this->debug)
-		{
-			Check::base($base);
+			$uri .= "b=$base";
 		}
-
-		$uri .= ($base ? "b=$base" : null);
 	}
 
 
@@ -142,8 +153,8 @@ class UriBuilder
 	 */
 	protected function addFiles(&$uri)
 	{
-		$base = $this->min->getBase();
-		$files = $this->min->getFiles();
+		$base = $this->getBase();
+		$files = $this->getFiles();
 
 		if($files)
 		{
@@ -176,7 +187,7 @@ class UriBuilder
 	 */
 	protected function addGroups(&$uri)
 	{
-		$groups = $this->min->getGroups();
+		$groups = $this->getGroups();
 
 		if($groups)
 		{
@@ -200,7 +211,76 @@ class UriBuilder
 
 
 
+	/**
+	 * Get the base directory from the data array.
+	 * @return string The base directory, false if unset or invalid.
+	 */
+	protected function getBase()
+	{
+		if(
+			($base = array_key_exists("base", $this->data) ? $this->data["base"] : false)
+			&& is_string($base)
+		)
+		{
+			if(substr($base, -1) == "/")
+			{
+				//Remove trailing slash
+				$base = substr($base, 0, -1);
 
+				//Store the modified string
+				$this->base = $base;
+			}
+		}
+		else
+		{
+			$base = false;
+		}
+
+		return $base;
+	}
+
+
+
+	/**
+	 * Get the array of files from the data array.
+	 */
+	protected function getFiles()
+	{
+		return $this->getDataArray("files");
+	}
+
+
+
+	/**
+	 * Get the array of groups from the data array.
+	 */
+	protected function getGroups()
+	{
+		return $this->getDataArray("groups");
+	}
+
+
+
+	/*
+	 * PRIVATE METHODS
+	 */
+
+
+
+	/**
+	 * Get a value in the data array as an array.
+	 * @param string $key The array key.
+	 * @return array An array, false if the data is invalid.
+	 */
+	private function getDataArray($key)
+	{
+		$data = array_key_exists($key, $this->data) ? $this->data[$key] : false;
+		if(!is_array($data))
+		{
+			$data = $data && is_string($data) ? [$data] : false;
+		}
+		return $data;
+	}
 
 
 
