@@ -196,6 +196,7 @@ class Minifier
 
 	/**
 	 * Remove a file from this Minifier.
+	 * <p>The file path must be exactly as it was added to this Minifier for it to be removed.</p>
 	 * @param string $file The file to remove.
 	 * @return boolean True if the file was removed, false if the file was not found.
 	 */
@@ -232,13 +233,20 @@ class Minifier
 
 	/**
 	 * Set the base directory for files to minify.
-	 * <p>The path should be relative to the document root and should not have a preceding or
-	 * trailing slash.</p>
-	 * @param string|boolean $dir The directory path, false to remove a base directory
+	 * @param string|boolean $dir The directory path relative to the document root, false to remove
+	 * a base directory.
 	 */
 	public function setBase($dir)
 	{
-		$this->base = is_string($dir) ? $dir : false;
+		if(!$dir || !is_string($dir))
+		{
+			$this->base = false;
+		}
+		else
+		{
+			//Remove a trailing slash
+			$this->base = substr($dir, -1) == "/" ? substr($dir, 0, -1) : $dir;
+		}
 	}
 
 
