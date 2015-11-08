@@ -214,6 +214,33 @@ class Minifier
 
 
 	/**
+	 * Remove an array of files from this Minifier.
+	 * <p>A file path must be exactly as it was added to this Minifier for it to be removed.</p>
+	 * @param mixed $files An array of files to remove. A single file may be passed as well, which
+	 * is the same as calling removeFile(). A falsey value will be treated as an empty array.</p>
+	 * @return array An array containing all file names that were removed.
+	 */
+	public function removeFiles($files)
+	{
+		if(!is_array($files))
+		{
+			$files = $files ? [$files] : [];
+		}
+
+		$rem = [];
+		foreach($files as $file)
+		{
+			if($this->removeFile($file))
+			{
+				$rem[] = $file;
+			}
+		}
+		return $rem;
+	}
+
+
+
+	/**
 	 * Remove a Minify group from this Minifier.
 	 * @param string $group The group to remove.
 	 * @return boolean True if the group was removed, false if the group was not found.
@@ -225,6 +252,32 @@ class Minifier
 		{
 			unset($this->groups[$index]);
 			$rem = true;
+		}
+		return $rem;
+	}
+
+
+
+	/**
+	 * Remove an array of Minify groupsfrom this Minifier.
+	 * @param mixed $groups An aray of Minify groups. A single group can be passed as well, which is
+	 * the same as calling removeGroup(). A falsey value will be treated as an empty array.
+	 * @return array An array containing all group names that were removed.
+	 */
+	public function removeGroups($groups)
+	{
+		if(!is_array($groups))
+		{
+			$groups = $groups ? [$groups] : [];
+		}
+
+		$rem = [];
+		foreach($groups as $group)
+		{
+			if($this->removeGroup($group))
+			{
+				$rem[] = $group;
+			}
 		}
 		return $rem;
 	}
