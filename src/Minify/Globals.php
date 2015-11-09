@@ -27,11 +27,12 @@ final class Globals
 	 * will be thrown if this is not a string.
 	 * @param string $file The path of the file to add relative to the public directory, or to the
 	 * Minify base directory if set.</p>.
+	 * @return boolean True if the file was added, false otherwise.
 	 * @throws MinifyException
 	 */
 	public static function addFile($id, $file)
 	{
-		self::getMinifier($id)->addFile($file);
+		return self::getMinifier($id)->addFile($file);
 	}
 
 
@@ -41,15 +42,16 @@ final class Globals
 	 * <p>If any files have already been added, they will be ignored.</p>
 	 * @param string $id An ID to indicate which URI these files will be added to. A MinifyException
 	 * will be thrown if this is not a string.
-	 * @param mixed $files An array of files to minify. A single file may be passed as well, which
-	 * is the same as calling addFile(). A falsey value will be treated as an empty array. The path
-	 * of each file should be relative to the public directory, or to the Minify base directory if
-	 * set.
+	 * @param array|string $files An array of files to minify. A single file may be passed as well,
+	 * which is the same as calling addFile(). A falsey value will be treated as an empty array. The
+	 * path of each file should be relative to the public directory, or to the Minify base directory
+	 * if set.
+	 * @return array An array containing each new file added.
 	 * @throws MinifyException
 	 */
 	public static function addFiles($id, $files)
 	{
-		self::getMinifier($id)->addFiles($files);
+		return self::getMinifier($id)->addFiles($files);
 	}
 
 
@@ -61,11 +63,12 @@ final class Globals
 	 * @param string $id An ID to indicate which URI this group will be added to. A MinifyException
 	 * will be thrown if this is not a string.
 	 * @param string $group The Minify group.
+	 * @return boolean True if the groups was added, false otherwise.
 	 * @throws MinifyException
 	 */
 	public static function addGroup($id, $group)
 	{
-		self::getMinifier($id)->addGroup($group);
+		return self::getMinifier($id)->addGroup($group);
 	}
 
 
@@ -76,19 +79,23 @@ final class Globals
 	 * already been added, this method will ignore them.</p>
 	 * @param string $id An ID to indicate which URI these groups will be added to. A
 	 * MinifyException will be thrown if this is not a string.
-	 * @param mixed $groups An aray of Minify groups. A single group can be passed as well, which is
-	 * the same as calling addGroup(). A falsey value will be treated as an empty array.
+	 * @param array|string $groups An aray of Minify groups. A single group can be passed as well,
+	 * which is the same as calling addGroup(). A falsey value will be treated as an empty array.
+	 * @return array An array containing each new group added.
 	 * @throws MinifyException
 	 */
 	public static function addGroups($id, $groups)
 	{
-		self::getMinifier($id)->addGroups($groups);
+		return self::getMinifier($id)->addGroups($groups);
 	}
 
 
 
 	/**
 	 * Create a URI to minify the added files.
+	 * <p>Once the URI has been generated it will be stored for this ID until any files,
+	 * groups, or the base is changed. This allows the URI to be retrieved multiple times with only
+	 * being generated once.</p>
 	 * <p>A MinifyException will be thrown if debugging is enabled and this Minifier contains
 	 * invalid settings.</p>
 	 * @param string $id An ID to indicate which URI to construct. A MinifyException will be thrown
@@ -215,11 +222,12 @@ final class Globals
 	 * will be thrown if this is not a string.
 	 * @param string|boolean $dir The directory path relative to the document root, false to remove
 	 * a base directory.
+	 * @return boolean True if the base directory was modified, false otherwise.
 	 * @throws MinifyException
 	 */
 	public static function setBase($id, $dir)
 	{
-		self::getMinifier($id)->setBase($dir);
+		return self::getMinifier($id)->setBase($dir);
 	}
 
 

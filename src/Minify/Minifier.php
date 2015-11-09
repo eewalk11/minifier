@@ -122,11 +122,11 @@ class Minifier implements JsonSerializable
 	/**
 	 * Add an array of files to minify.
 	 * <p>If any files have already been added, they will be ignored.</p>
-	 * @param mixed $files An array of files to minify. A single file may be passed as well, which
-	 * is the same as calling addFile(). A falsey value will be treated as an empty array. The path
-	 * of each file should be relative to the public directory, or to the Minify base directory if
-	 * set.
-	 * @return array An array of each new file added.
+	 * @param array|string $files An array of files to minify. A single file may be passed as well,
+	 * which is the same as calling addFile(). A falsey value will be treated as an empty array. The
+	 * path of each file should be relative to the public directory, or to the Minify base directory
+	 * if set.
+	 * @return array An array containing each new file added.
 	 */
 	public function addFiles($files)
 	{
@@ -153,9 +153,9 @@ class Minifier implements JsonSerializable
 	 * Add an array of Minify groups.
 	 * <p>Each group must be a group defined in the Minify groupsConfig.php file. If any groups have
 	 * already been added, this method will ignore them.</p>
-	 * @param mixed $groups An aray of Minify groups. A single group can be passed as well, which is
-	 * the same as calling addGroup(). A falsey value will be treated as an empty array.
-	 * @return array An array of each new group added.
+	 * @param array|string $groups An aray of Minify groups. A single group can be passed as well,
+	 * which is the same as calling addGroup(). A falsey value will be treated as an empty array.
+	 * @return array An array containing each new group added.
 	 */
 	public function addGroups($groups)
 	{
@@ -237,8 +237,9 @@ class Minifier implements JsonSerializable
 	/**
 	 * Remove an array of files from this Minifier.
 	 * <p>A file path must be exactly as it was added to this Minifier for it to be removed.</p>
-	 * @param mixed $files An array of files to remove. A single file may be passed as well, which
-	 * is the same as calling removeFile(). A falsey value will be treated as an empty array.</p>
+	 * @param array|string $files An array of files to remove. A single file may be passed as well,
+	 * which is the same as calling removeFile(). A falsey value will be treated as an empty
+	 * array.</p>
 	 * @return array An array containing all file names that were removed.
 	 */
 	public function removeFiles($files)
@@ -277,17 +278,19 @@ class Minifier implements JsonSerializable
 	 * Set the base directory for files to minify.
 	 * @param string|boolean $dir The directory path relative to the document root, false to remove
 	 * a base directory.
+	 * @return boolean True if the base directory was modified, false otherwise.
 	 */
 	public function setBase($dir)
 	{
-		$newBase = $dir || is_string($dir) ? $dir : false;
+		$base = $dir || is_string($dir) ? $dir : false;
 
-		if($newBase != $this->base)
+		if(($mod = $base != $this->base))
 		{
 			$this->clearUri();
+			$this->base = $base;
 		}
 
-		$this->base = $newBase;
+		return $mod;
 	}
 
 
