@@ -18,6 +18,9 @@
 	"autoload": {
 		"psr-4": {
 			"Minify\\": "src/Minify/"
-		}
+		},
+		"files": [
+			"src/functions.php"
+		]
 	}
 }
