@@ -1,26 +1,45 @@
 # Minifier
 
-A simple library for object-oriented use of the php minify library. All class included are found in the *Minify* namespace.
+A simple library for object-oriented use of the php Minify library. All functions and classes included are found in the *Minify* namespace.
 
-The *Minify* php library must be correctly installed in the project to use this library: https://github.com/mrclay/minify
+The Minify php library must be correctly installed in the project to use this library:<br> https://github.com/mrclay/minify
 
 Classes
 -------
 
 These are the important classes to use the library.
 
-### Minify/Minifier
+### Minifier
 
-The *Minifier* class is an object to collect files and groups identified in the /min/groupsConfig.php file. Once settings are complete, the Minifier can be run to generate a URI. The URI should be set as the value of a css *link* tag's *href* attribute or a *script* tag's *src* attribute. If the Minify library is properly installed in the project, it will handle the rest.
+The *Minifier* class is an object to collect files and groups identified in the /min/groupsConfig.php file. Once settings are complete, the Minifier can be run by calling *Minifier::createUri()* to generate a URI. The URI should be set as the value of a css *link* tag's *href* attribute or a *script* tag's *src* attribute. If the Minify library is properly installed in the project, it will handle the rest.
 
-### Minify/Config
+### UriBuilder
+
+This takes the data stored in a *Minifier* object, a *JsonSerializable* object, or an associated array and generates a minify URI. If using a *Minifier* object, calling *Minifier::createUri()* will automatically construct and run a *UriBuilder*. Otherwise, just construct a new *UriBuilder* and run *UriBuilder::buildUri()*.
+
+If using *JsonSerializable* or an associative array to construct a *UriBuilder*, the array should have the following keys/values:
+
+* "base" => A string containing the base directory for the files in the URI, false if unset.
+* "groups" => A string that is a single minify group, or an array of strings that are minify groups. Each group must be registered in [document_root]/min/groupsConfig.php.
+* "files" => A string that is a single file to minify, or an array strings that are files to minify. If the base directory is set, file paths should be relative to the base. If the base directory is not set, file paths should be relative to the document root.
+ 
+### Globals
+
+This class contains static functions to access a *Minifier* object from anywhere. Each function in the *Globals* class is exactly the same as a public method in the *Minifier* class that takes an extra ID string as the first argument. The ID is used to reference a particular *Minifier* so that the object's reference doesn't need to be passed around.
+
+### Config
 
 Change configuration settings for the library. At the moment only 1 option exists, but it's there if I need/want to expand on it later.
 
 Options:
 
-* "debug" => set to a boolean. If true, an exception will be thrown if a URI contains nonexistent/unreadable files or unconfigured Minify groups. If false, no exceptions will be thrown when the URI is generated.
+* "debug" => Boolean. If true, an exception will be thrown if a URI contains nonexistent/unreadable files or unconfigured Minify groups. If false, no exceptions will be thrown when the URI is generated.
 
-### Minify/MinifyException
+### MinifyException
 
 Any time an exception is thrown in this library, it will be this type.
+
+Helper Functions
+----------------
+
+There are a few helper functions in the *Minify* namespace. Most are just wrappers around the *Minify/Globals* static functions. There is also a wrapper function *minify()* to construct, run, and return the result of a *UriBuilder* from an argument.
