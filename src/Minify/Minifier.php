@@ -130,7 +130,7 @@ class Minifier implements JsonSerializable
 	 */
 	public function addFiles($files)
 	{
-		$this->addArray($files, $this->files);
+		return $this->addArray($files, $this->files);
 	}
 
 
@@ -159,7 +159,7 @@ class Minifier implements JsonSerializable
 	 */
 	public function addGroups($groups)
 	{
-		$this->addArray($groups, $this->groups);
+		return $this->addArray($groups, $this->groups);
 	}
 
 
@@ -256,7 +256,7 @@ class Minifier implements JsonSerializable
 	 */
 	public function removeGroup($group)
 	{
-		$this->removeItem($group, $this->groups);
+		return $this->removeItem($group, $this->groups);
 	}
 
 
@@ -336,7 +336,7 @@ class Minifier implements JsonSerializable
 
 		$added = [];
 
-		foreach($added as $item)
+		foreach($add as $item)
 		{
 			if($this->addItem($item, $array))
 			{
