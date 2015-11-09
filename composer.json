@@ -1,7 +1,7 @@
 {
 	"name": "eewalk11/minifier",
 	"type": "library",
-	"description": "A simple class for object-oriented use of the php minify library",
+	"description": "A simple library for object-oriented use of the php Minify library",
 	"keywords": [
 		"minify"
 	],
@@ -17,8 +17,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Minify\\": "src/Minify/"
-		},
+			"Minify\\": "src/Minify/"},
 		"files": [
 			"src/Minify/functions.php"
 		]
