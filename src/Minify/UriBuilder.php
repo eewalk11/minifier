@@ -50,7 +50,8 @@ class UriBuilder
 
 	/**
 	 * Construct a new Minify URI builder.
-	 * @param Minifier|array $data Data from which to construct the URI. This may be:
+	 * @param Minifier|\JsonSerializable|array $data Data from which to construct the URI. This may
+	 * be:
 	 * <ul>
 	 *   <li>An instance of Minify/Minifier</li>
 	 *   <li>An instance of JsonSerializable, where jsonSerialize() produces an array in the format
