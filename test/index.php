@@ -291,6 +291,19 @@ function test17()
 	);
 }
 
+function test18()
+{
+	echo "<p>Testing helper functions... ";
+	\Minify\setBase("scripts", "scripts/");
+	\Minify\addFiles("scripts", ["script1.js", "script2.js"]);
+	\Minify\addGroup("styles", "style1");
+	results(
+			\Minify\createUri("scripts") == "/min/b=scripts&amp;f=script1.js,script2.js"
+			&& \Minify\createUri("styles") == "/min/g=style1"
+	);
+	echo "</p>";
+}
+
 
 
 //Build page
