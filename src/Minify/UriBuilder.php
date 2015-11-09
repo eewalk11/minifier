@@ -4,6 +4,8 @@
 
 namespace Minify;
 
+use JsonSerializable;
+
 
 
 /**
@@ -51,15 +53,17 @@ class UriBuilder
 	 * @param Minifier|array $data Data from which to construct the URI. This may be:
 	 * <ul>
 	 *   <li>An instance of Minify/Minifier</li>
+	 *   <li>An instance of JsonSerializable, where jsonSerialize() produces an array in the format
+	 *   of Minify/Minifier::jsonSerialize()</li>
 	 *   <li>An array matching the format of the output from Minify/Minifier::jsonSerialize()</li>
 	 * </ul>
 	 * The URI will fail to generate if this is not an expected type.
 	 */
 	public function __construct($data)
 	{
-		if($data instanceof Minifier)
+		if($data instanceof JsonSerializable)
 		{
-			$this->data = json_encode($data);
+			$this->data = json_decode(json_encode($data), true);
 		}
 		elseif(is_array($data))
 		{
