@@ -20,7 +20,7 @@
 			"Minify\\": "src/Minify/"
 		},
 		"files": [
-			"src/functions.php"
+			"src/Minify/functions.php"
 		]
 	}
 }
