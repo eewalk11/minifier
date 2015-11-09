@@ -119,7 +119,7 @@ class Minifier implements JsonSerializable
 	 * @param mixed $files An array of files to minify. A single file may be passed as well, which
 	 * is the same as calling addFile(). A falsey value will be treated as an empty array. The path
 	 * of each file should be relative to the public directory, or to the Minify base directory if
-	 * set.</p>
+	 * set.
 	 */
 	public function addFiles($files)
 	{
