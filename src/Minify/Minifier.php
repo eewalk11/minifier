@@ -175,7 +175,7 @@ class Minifier implements JsonSerializable
 
 
 	/**
-	 * Create a URI to minify the added files and write it to the document.
+	 * Create a URI to minify the added files.
 	 * <p>A MinifyException will be thrown if debugging is enabled and this Minifier contains
 	 * invalid settings.</p>
 	 * @return string|boolean The minify URI, false if nothing was added to minify.
@@ -287,7 +287,7 @@ class Minifier implements JsonSerializable
 
 
 	/**
-	 * Remove an array of Minify groupsfrom this Minifier.
+	 * Remove an array of Minify groups from this Minifier.
 	 * @param mixed $groups An aray of Minify groups. A single group can be passed as well, which is
 	 * the same as calling removeGroup(). A falsey value will be treated as an empty array.
 	 * @return array An array containing all group names that were removed.
