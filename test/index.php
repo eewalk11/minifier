@@ -4,9 +4,9 @@
 
 require_once(__DIR__ . "/../vendor/autoload.php");
 
-use Minify\Config;
-use Minify\Minifier;
-use Minify\MinifyException;
+use EeWalk11\Minify\Config;
+use EeWalk11\Minify\Minifier;
+use EeWalk11\Minify\MinifyException;
 
 
 
