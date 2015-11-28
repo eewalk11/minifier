@@ -17,9 +17,9 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Minify\\": "src/Minify/"},
+			"EeWalk11\\": "src/EeWalk11/"},
 		"files": [
-			"src/Minify/functions.php"
+			"src/EeWalk11/Minify/functions.php"
 		]
 	}
 }

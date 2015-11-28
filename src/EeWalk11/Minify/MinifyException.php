@@ -2,7 +2,7 @@
 
 
 
-namespace Minify;
+namespace EeWalk11\Minify;
 
 use Exception;
 
