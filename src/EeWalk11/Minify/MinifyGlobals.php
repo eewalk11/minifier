@@ -15,16 +15,29 @@ final class MinifyGlobals
 
 
 	/*
+	 * PRIVATE STATIC VARIABLES
+	 */
+
+
+
+	/**
+	 * @var array An array of global minifiers. Array keys are a Minifier ID, values are Minifier
+	 * instances.
+	 */
+	private static $minifiers;
+
+
+
+	/*
 	 * PUBLIC STATIC FUNCTIONS
 	 */
 
 
 
 	/**
-	 * Add a file to a URI.
+	 * Add a file to a global Minifier.
 	 * <p>If the file has already been added, this method will do nothing.</p>
-	 * @param string $id An ID to indicate which URI this file will be added to. A MinifyException
-	 * will be thrown if this is not a string.
+	 * @param string $id The global Minifier ID.
 	 * @param string $file The path of the file to add relative to the public directory, or to the
 	 * Minify base directory if set.</p>.
 	 * @return boolean True if the file was added, false otherwise.
@@ -38,10 +51,9 @@ final class MinifyGlobals
 
 
 	/**
-	 * Add an array of files to a URI.
+	 * Add an array of files to a global Minifier.
 	 * <p>If any files have already been added, they will be ignored.</p>
-	 * @param string $id An ID to indicate which URI these files will be added to. A MinifyException
-	 * will be thrown if this is not a string.
+	 * @param string $id The global Minifier ID.
 	 * @param array|string $files An array of files to minify. A single file may be passed as well,
 	 * which is the same as calling addFile(). A falsey value will be treated as an empty array. The
 	 * path of each file should be relative to the public directory, or to the Minify base directory
@@ -57,11 +69,10 @@ final class MinifyGlobals
 
 
 	/**
-	 * Add a Minify group to a URI.
+	 * Add a Minify group to a global Minifier.
 	 * <p>The group must be a group defined in the Minify groupsConfig.php file. If the group has
 	 * already been added, this method will do nothing.</p>
-	 * @param string $id An ID to indicate which URI this group will be added to. A MinifyException
-	 * will be thrown if this is not a string.
+	 * @param string $id The global Minifier ID.
 	 * @param string $group The Minify group.
 	 * @return boolean True if the groups was added, false otherwise.
 	 * @throws MinifyException
@@ -74,11 +85,10 @@ final class MinifyGlobals
 
 
 	/**
-	 * Add an array of Minify groups to a URI.
+	 * Add an array of Minify groups to a global Minifier.
 	 * <p>Each group must be a group defined in the Minify groupsConfig.php file. If any groups have
 	 * already been added, this method will ignore them.</p>
-	 * @param string $id An ID to indicate which URI these groups will be added to. A
-	 * MinifyException will be thrown if this is not a string.
+	 * @param string $id The global Minifier ID.
 	 * @param array|string $groups An aray of Minify groups. A single group can be passed as well,
 	 * which is the same as calling addGroup(). A falsey value will be treated as an empty array.
 	 * @return array An array containing each new group added.
@@ -92,14 +102,13 @@ final class MinifyGlobals
 
 
 	/**
-	 * Create a URI to minify the added files.
+	 * Create a URI to minify the files add to a global Minifier.
 	 * <p>Once the URI has been generated it will be stored for this ID until any files,
 	 * groups, or the base is changed. This allows the URI to be retrieved multiple times with only
 	 * being generated once.</p>
 	 * <p>A MinifyException will be thrown if debugging is enabled and this Minifier contains
 	 * invalid settings.</p>
-	 * @param string $id An ID to indicate which URI to construct. A MinifyException will be thrown
-	 * if this is not a string.
+	 * @param string $id The global Minifier ID.
 	 * @return string|boolean The minify URI, false if nothing was added to minify.
 	 * @throws MinifyException
 	 */
@@ -111,9 +120,8 @@ final class MinifyGlobals
 
 
 	/**
-	 * Get the Minify base set for a URI.
-	 * @param string $id An ID to indicate which URI the base will be retrieved from. A
-	 * MinifyException will be thrown if this is not a string.
+	 * Get the Minify base set for a global Minifier.
+	 * @param string $id The global Minifier ID.
 	 * @return string|boolean The relative path to the Minify base directory, false if unset.
 	 * @throws MinifyException
 	 */
@@ -125,9 +133,8 @@ final class MinifyGlobals
 
 
 	/**
-	 * Get an array of relative file paths added to a URI.
-	 * @param string $id An ID to indicate which URI the files will be retrieved from. A
-	 * MinifyException will be thrown if this is not a string.
+	 * Get an array of relative file paths added to a global Minifier.
+	 * @param string $id The global Minifier ID.
 	 * @return array An array of files.
 	 * @throws MinifyException
 	 */
@@ -139,9 +146,8 @@ final class MinifyGlobals
 
 
 	/**
-	 * Get an array of Minify groups added to a URI.
-	 * @param string $id An ID to indicate which URI the groups will be retrieved from. A
-	 * MinifyException will be thrown if this is not a string.
+	 * Get an array of Minify groups added to a global Minifier.
+	 * @param string $id The global Minifier ID.
 	 * @return array An array of groups.
 	 * @throws MinifyException
 	 */
@@ -153,10 +159,21 @@ final class MinifyGlobals
 
 
 	/**
-	 * Remove a file from a URI.
+	 * Get an array of all registered global Minfier IDs.
+	 * @return array An array of Minifier IDs.
+	 */
+	public static function getRegistered()
+	{
+		self::initArray();
+		return array_keys(self::$minifiers);
+	}
+
+
+
+	/**
+	 * Remove a file from a global Minifier.
 	 * <p>The file path must be exactly as it was added to the URI for it to be removed.</p>
-	 * @param string $id An ID to indicate which URI this file will be removed from. A
-	 * MinifyException will be thrown if this is not a string.
+	 * @param string $id The global Minifier ID.
 	 * @param string $file The file to remove.
 	 * @return boolean True if the file was removed, false if the file was not found.
 	 * @throws MinifyException
@@ -169,10 +186,9 @@ final class MinifyGlobals
 
 
 	/**
-	 * Remove an array of files from a URI.
+	 * Remove an array of files from a global Minifier.
 	 * <p>A file path must be exactly as it was added to the URI for it to be removed.</p>
-	 * @param string $id An ID to indicate which URI these files will be removed from. A
-	 * MinifyException will be thrown if this is not a string.
+	 * @param string $id The global Minifier ID.
 	 * @param mixed $files An array of files to remove. A single file may be passed as well, which
 	 * is the same as calling removeFile(). A falsey value will be treated as an empty array.</p>
 	 * @return array An array containing all file names that were removed.
@@ -186,9 +202,8 @@ final class MinifyGlobals
 
 
 	/**
-	 * Remove a Minify group from a URI.
-	 * @param string $id An ID to indicate which URI this group will be removed from. A
-	 * MinifyException will be thrown if this is not a string.
+	 * Remove a Minify group from a global Minifier.
+	 * @param string $id The global Minifier ID.
 	 * @param string $group The group to remove.
 	 * @return boolean True if the group was removed, false if the group was not found.
 	 * @throws MinifyException
@@ -201,9 +216,8 @@ final class MinifyGlobals
 
 
 	/**
-	 * Remove an array of Minify groups from a URI.
-	 * @param string $id An ID to indicate which URI these groups will be removed from. A
-	 * MinifyException will be thrown if this is not a string.
+	 * Remove an array of Minify groups from a global Minifier.
+	 * @param string $id The global Minifier ID.
 	 * @param mixed $groups An aray of Minify groups. A single group can be passed as well, which is
 	 * the same as calling removeGroup(). A falsey value will be treated as an empty array.
 	 * @return array An array containing all group names that were removed.
@@ -217,9 +231,8 @@ final class MinifyGlobals
 
 
 	/**
-	 * Set the base directory for files to minify.
-	 * @param string $id An ID to indicate which URI this base will be set for. A MinifyException
-	 * will be thrown if this is not a string.
+	 * Set the base directory for a global Minifier.
+	 * @param string $id The global Minifier ID.
 	 * @param string|boolean $dir The directory path relative to the document root, false to remove
 	 * a base directory.
 	 * @return boolean True if the base directory was modified, false otherwise.
@@ -228,6 +241,28 @@ final class MinifyGlobals
 	public static function setBase($id, $dir)
 	{
 		return self::getMinifier($id)->setBase($dir);
+	}
+
+
+
+	/**
+	 * Unregister a global Minifier.
+	 * @param string $id The global Minifier ID.
+	 * @return boolean True if the ID had been registered and was removed, false if the ID had not
+	 * been registered.
+	 */
+	public static function unregister($id)
+	{
+		self::initArray();
+		if(array_key_exists($id, self::$minifiers))
+		{
+			unset(self::$minifiers[$id]);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 
@@ -253,28 +288,37 @@ final class MinifyGlobals
 			throw new MinifyException("Invalid Minifier ID: $id");
 		}
 
-		//Create a static array in which to store global Minifiers
+		//Initialize a static array in which to store global Minifiers
 
-		static $array = null;
-		if($array === null)
-		{
-			$array = [];
-		}
+		self::initArray();
 
 		//Fetch the Minifier if it has been constructed
 		//Create and store a new Minifier if not
 
-		if(array_key_exists($id, $array))
+		if(array_key_exists($id, self::$minifiers))
 		{
-			$min = $array[$id];
+			$min = self::$minifiers[$id];
 		}
 		else
 		{
 			$min = new Minifier;
-			$array[$id] = $min;
+			self::$minifiers[$id] = $min;
 		}
-
 		return $min;
+	}
+
+
+
+	/**
+	 * Initialize the array of Minifiers.
+	 * <p>If the array has already been created, this function will do nothing.</p>
+	 */
+	private static function initArray()
+	{
+		if(!isset(self::$minifiers))
+		{
+			self::$minifiers = [];
+		}
 	}
 
 
