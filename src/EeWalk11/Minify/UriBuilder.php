@@ -73,7 +73,7 @@ class UriBuilder
 
 		//$this->data will be empty if data type is invalid
 
-		$this->debug = Config::getOption("debug");
+		$this->debug = MinifyConfig::getOption("debug");
 	}
 
 
@@ -107,7 +107,7 @@ class UriBuilder
 
 		if($this->debug)
 		{
-			Check::install();
+			MinifyCheck::install();
 		}
 
 		//Build the URI
@@ -139,7 +139,7 @@ class UriBuilder
 		{
 			if($this->debug)
 			{
-				Check::base($base);
+				MinifyCheck::base($base);
 			}
 
 			$uri .= "b=$base";
@@ -169,7 +169,7 @@ class UriBuilder
 			{
 				if($this->debug)
 				{
-					Check::file($file, $base);
+					MinifyCheck::file($file, $base);
 				}
 
 				$uri .= "$file,";
@@ -202,7 +202,7 @@ class UriBuilder
 			{
 				if($this->debug)
 				{
-					Check::group($group);
+					MinifyCheck::group($group);
 				}
 
 				$uri .= "$group,";

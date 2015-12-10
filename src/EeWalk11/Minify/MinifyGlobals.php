@@ -9,7 +9,7 @@ namespace EeWalk11\Minify;
 /**
  * This file contains static functions to access global Minifier objects.
  */
-final class Globals
+final class MinifyGlobals
 {
 
 

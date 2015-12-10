@@ -9,7 +9,7 @@ namespace EeWalk11\Minify;
 /**
  * This class contains static functions to check Minify files and settings.
  */
-final class Check
+final class MinifyCheck
 {
 
 

@@ -25,7 +25,7 @@ function minify($data)
 
 
 
-//These are helper functions that are simply wrappers to the Minify/Globals static functions
+//These are helper functions that are simply wrappers to the Minify/MinifyGlobals static functions
 
 
 
@@ -40,7 +40,7 @@ function minify($data)
  */
 function addFile($id, $file)
 {
-   return Globals::addFile($id, $file);
+   return MinifyGlobals::addFile($id, $file);
 }
 
 
@@ -59,7 +59,7 @@ function addFile($id, $file)
  */
 function addFiles($id, $files)
 {
-	return Globals::addFiles($id, $files);
+	return MinifyGlobals::addFiles($id, $files);
 }
 
 
@@ -76,7 +76,7 @@ function addFiles($id, $files)
  */
 function addGroup($id, $group)
 {
-	return Globals::addGroup($id, $group);
+	return MinifyGlobals::addGroup($id, $group);
 }
 
 
@@ -94,7 +94,7 @@ function addGroup($id, $group)
  */
 function addGroups($id, $groups)
 {
-	return Globals::addGroups($id, $groups);
+	return MinifyGlobals::addGroups($id, $groups);
 }
 
 
@@ -113,7 +113,7 @@ function addGroups($id, $groups)
  */
 function createUri($id)
 {
-	return Globals::createUri($id);
+	return MinifyGlobals::createUri($id);
 }
 
 
@@ -127,7 +127,7 @@ function createUri($id)
  */
 function getBase($id)
 {
-	return Globals::getBase($id);
+	return MinifyGlobals::getBase($id);
 }
 
 
@@ -141,7 +141,7 @@ function getBase($id)
  */
 function getFiles($id)
 {
-	return Globals::getFiles($id);
+	return MinifyGlobals::getFiles($id);
 }
 
 
@@ -155,7 +155,7 @@ function getFiles($id)
  */
 function getGroups($id)
 {
-	return Globals::getGroups($id);
+	return MinifyGlobals::getGroups($id);
 }
 
 
@@ -171,7 +171,7 @@ function getGroups($id)
  */
 function removeFile($id, $file)
 {
-	return Globals::removeFile($id, $file);
+	return MinifyGlobals::removeFile($id, $file);
 }
 
 
@@ -188,7 +188,7 @@ function removeFile($id, $file)
  */
 function removeFiles($id, $files)
 {
-	return Globals::removeFiles($id, $files);
+	return MinifyGlobals::removeFiles($id, $files);
 }
 
 
@@ -203,7 +203,7 @@ function removeFiles($id, $files)
  */
 function removeGroup($id, $group)
 {
-	return Globals::removeGroup($id, $group);
+	return MinifyGlobals::removeGroup($id, $group);
 }
 
 
@@ -219,7 +219,7 @@ function removeGroup($id, $group)
  */
 function removeGroups($id, $groups)
 {
-	return Globals::removeGroups($id, $groups);
+	return MinifyGlobals::removeGroups($id, $groups);
 }
 
 
@@ -235,7 +235,7 @@ function removeGroups($id, $groups)
  */
 function setBase($id, $dir)
 {
-	return Globals::setBase($id, $dir);
+	return MinifyGlobals::setBase($id, $dir);
 }
 
 

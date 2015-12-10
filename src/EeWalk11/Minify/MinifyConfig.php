@@ -7,9 +7,9 @@ namespace EeWalk11\Minify;
 
 
 /**
- * This class contains configuration settings.
+ * This class contains Minifier configuration settings.
  */
-final class Config
+final class MinifyConfig
 {
 
 
@@ -87,7 +87,7 @@ final class Config
 				"debug" => true
 			];
 		}
-		
+
 		return $array;
 	}
 
