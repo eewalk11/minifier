@@ -19,21 +19,21 @@ This takes the data stored in a *Minifier* object, a *JsonSerializable* object, 
 
 If using *JsonSerializable* or an associative array to construct a *UriBuilder*, the array should have the following keys/values:
 
-* "base" => A string containing the base directory for the files in the URI, false if unset.
-* "groups" => A string that is a single minify group, or an array of strings that are minify groups. Each group must be registered in [document_root]/min/groupsConfig.php.
-* "files" => A string that is a single file to minify, or an array strings that are files to minify. If the base directory is set, file paths should be relative to the base. If the base directory is not set, file paths should be relative to the document root.
+* **base** *[string|boolean]* The base directory for the files in the URI, false if unset.
+* **groups** *[string|array]* A single minify group or an array of minify groups. Each group must be registered in /min/groupsConfig.php.
+* **files** [string|array] A single file to minify or an array of files to minify. If the base directory is set, file paths should be relative to the base. If the base directory is not set, file paths should be relative to the document root.
  
-### Globals
+### MinifyGlobals
 
-This class contains static functions to access a *Minifier* object from anywhere. Each function in the *Globals* class is exactly the same as a public method in the *Minifier* class that takes an extra ID string as the first argument. The ID is used to reference a particular *Minifier* so that the object's reference doesn't need to be passed around.
+This class contains static functions to access a *Minifier* object from anywhere. Each function in the *MinifyGlobals* class is exactly the same as a public method in the *Minifier* class that takes an extra ID string as the first argument. The ID is used to reference a particular *Minifier* so that the object's reference doesn't need to be passed around.
 
-### Config
+### MinifyConfig
 
 Change configuration settings for the library. At the moment only 1 option exists, but it's there if I need/want to expand on it later.
 
 Options:
 
-* "debug" => Boolean. If true, an exception will be thrown if a URI contains nonexistent/unreadable files or unconfigured Minify groups. If false, no exceptions will be thrown when the URI is generated.
+* **debug** *[boolean]* If true, an exception will be thrown if a URI contains nonexistent/unreadable files or unconfigured Minify groups. If false, no exceptions will be thrown when the URI is generated.
 
 ### MinifyException
 
@@ -42,4 +42,4 @@ Any time an exception is thrown in this library, it will be this type.
 Helper Functions
 ----------------
 
-There are a few helper functions in the *Minify* namespace. Most are just wrappers around the *Minify/Globals* static functions. There is also a wrapper function *minify()* to construct, run, and return the result of a *UriBuilder* from an argument.
+There are a few helper functions in the *Minify* namespace. Most are just wrappers around the *MinifyGlobals* static functions. There is also a wrapper function *minify()* to construct, run, and return the result of a *UriBuilder* from an argument.
